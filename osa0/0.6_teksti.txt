@@ -1,0 +1,32 @@
+title Single page app - uusi muistiinpano
+
+note over selain:
+JS-koodi hakee sivulta lomake-elementin ja
+rekisteröi sille tapahtumankäsittelijän
+lomakkeen lähetystä varten
+end note
+
+note over selain:
+JS-koodi estää oletusarvoisen toiminnan 
+eli lomakkeen lähetyksen ja sivun
+uudelleen lataamisen
+end note
+
+note over selain:
+JS-koodi luo muistiinpanon,
+lisää sen muistiinpanojen listalle,
+piirtää ruudun sisällön uudelleen
+ja lähettää uuden muistiinpanon
+palvelimelle seuraavassa POST-
+pyynnössä JSON-merkkijonona
+end note
+
+selain->palvelin: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+
+note right of palvelin:
+Pyyntöön liitetty header Content-type kertoo
+palvelimelle, että pyynnön mukana oleva data
+on JSON-muotoista
+end note
+
+palvelin-->selain: 201 Created
