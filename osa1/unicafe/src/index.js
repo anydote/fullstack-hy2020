@@ -12,7 +12,8 @@ const Button = ({ handleClick, text }) => (
 const Statistics = ({ good, neutral, bad }) => {
   let feedbackCount = good + neutral + bad
   let feedbackPoints = good * 1 + neutral * 0 + bad * (-1)
-  let average = feedbackPoints / feedbackCount
+  let average = parseFloat(feedbackPoints / feedbackCount).toFixed(2)
+  let positiveShare = parseFloat(good / feedbackCount).toFixed(2) + " %"
 
   if (feedbackCount > 0) {
     return (
@@ -22,6 +23,7 @@ const Statistics = ({ good, neutral, bad }) => {
         <StatisticLine text="bad" value={bad} />
         <StatisticLine text="all" value={feedbackCount} />
         <StatisticLine text="average" value={average} />
+        <StatisticLine text="positive" value={positiveShare} />
       </div>  
     )
   } else {
