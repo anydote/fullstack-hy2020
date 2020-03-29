@@ -2,7 +2,14 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
 const Header = ({ text }) => <h1>{text}</h1>
-const StatisticLine = ({ text, value }) => <div>{text} {value}</div>
+
+const StatisticLine = ({ text, value }) => (
+  <tr>
+    <td>{text}</td> 
+    <td>{value}</td>
+  </tr>
+)
+
 const Button = ({ handleClick, text }) => (
   <button onClick={handleClick}>
     {text}
@@ -17,14 +24,14 @@ const Statistics = ({ good, neutral, bad }) => {
 
   if (feedbackCount > 0) {
     return (
-      <div>
+      <table>
         <StatisticLine text="good" value={good} />
         <StatisticLine text="neutral" value={neutral} />
         <StatisticLine text="bad" value={bad} />
         <StatisticLine text="all" value={feedbackCount} />
         <StatisticLine text="average" value={average} />
         <StatisticLine text="positive" value={positiveShare} />
-      </div>  
+      </table>  
     )
   } else {
     return <div><p>No feedback given</p></div>
