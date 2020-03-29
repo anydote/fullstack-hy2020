@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
 const Header = ({ text }) => <h1>{text}</h1>
-const Display = ({ counter }) => <div>{counter}</div>
+const StatisticLine = ({ text, value }) => <div>{text} {value}</div>
 const Button = ({ handleClick, text }) => (
   <button onClick={handleClick}>
     {text}
@@ -17,7 +17,7 @@ const App = () => {
 
   const increaseGood = () => setGood(good + 1)
   const increaseNeutral = () => setNeutral(neutral + 1)
-  const increaseBad = () => setNeutral(neutral + 1)
+  const increaseBad = () => setBad(bad + 1)
 
   return (
     <div>
@@ -34,6 +34,10 @@ const App = () => {
         handleClick={increaseBad}
         text="bad"
       />
+      <Header text="statistics" />
+      <StatisticLine text="good" value={good} />
+      <StatisticLine text="neutral" value={neutral} />
+      <StatisticLine text="bad" value={bad} />
     </div>
   )
 }
