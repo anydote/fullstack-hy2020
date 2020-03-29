@@ -14,15 +14,19 @@ const Statistics = ({ good, neutral, bad }) => {
   let feedbackPoints = good * 1 + neutral * 0 + bad * (-1)
   let average = feedbackPoints / feedbackCount
 
-  return (
-    <div>
-      <StatisticLine text="good" value={good} />
-      <StatisticLine text="neutral" value={neutral} />
-      <StatisticLine text="bad" value={bad} />
-      <StatisticLine text="all" value={feedbackCount} />
-      <StatisticLine text="average" value={average} />
-    </div>  
-  )
+  if (feedbackCount > 0) {
+    return (
+      <div>
+        <StatisticLine text="good" value={good} />
+        <StatisticLine text="neutral" value={neutral} />
+        <StatisticLine text="bad" value={bad} />
+        <StatisticLine text="all" value={feedbackCount} />
+        <StatisticLine text="average" value={average} />
+      </div>  
+    )
+  } else {
+    return <div><p>No feedback given</p></div>
+  }
 }
 
 const App = () => {
