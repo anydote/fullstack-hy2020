@@ -18,6 +18,10 @@ const App = () => {
   const increaseGood = () => setGood(good + 1)
   const increaseNeutral = () => setNeutral(neutral + 1)
   const increaseBad = () => setBad(bad + 1)
+  
+  let feedbackCount = good + bad + neutral
+  let feedbackPoints = good * 1 + bad * (-1) + neutral * 0
+  let average = feedbackPoints / feedbackCount
 
   return (
     <div>
@@ -38,6 +42,8 @@ const App = () => {
       <StatisticLine text="good" value={good} />
       <StatisticLine text="neutral" value={neutral} />
       <StatisticLine text="bad" value={bad} />
+      <StatisticLine text="all" value={feedbackCount} />
+      <StatisticLine text="average" value={average} />
     </div>
   )
 }
