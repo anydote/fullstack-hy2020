@@ -46,6 +46,7 @@ const SingleCountryDisplay = ({ country }) => (
         </li>
       )}
     </ul>
+    <img src={country.flag} width="200"/>
   </>
 )
 
