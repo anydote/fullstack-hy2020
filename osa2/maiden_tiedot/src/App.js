@@ -25,7 +25,7 @@ const CountryDisplay = ({ countries, filter }) => {
   } else if (filteredCountries.length > 1 && filteredCountries.length <= 10) {
     return <CountryList countries={filteredCountries} />
   } else if (filteredCountries.length === 1) {
-    return <SingleCountryDisplay country={filteredCountries} />
+    return <SingleCountryDisplay country={filteredCountries[0]} />
   } else {
     return ""
   }
@@ -33,9 +33,21 @@ const CountryDisplay = ({ countries, filter }) => {
 
 const CountryList = ({ countries }) => countries.map((c) => <div>{c.name}</div>)
 
-const SingleCountryDisplay = ({ country }) => {
-  return ""
-}
+const SingleCountryDisplay = ({ country }) => (
+  <>
+    <h1>{country.name}</h1>
+    <div>capital {country.capital}</div>
+    <div>population {country.population}</div>
+    <h2>Languages</h2>
+    <ul>
+      {country.languages.map(language => 
+        <li key={language.iso639_1}>
+          {language.name}
+        </li>
+      )}
+    </ul>
+  </>
+)
 
 const App = () => {
   const [ countries, setCountries] = useState([])
