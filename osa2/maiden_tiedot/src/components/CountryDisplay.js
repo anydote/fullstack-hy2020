@@ -1,4 +1,5 @@
 import React from 'react';
+import Weather from './Weather';
 
 const CountryDisplay = ({
 	filter,
@@ -66,6 +67,7 @@ const SingleCountryDisplay = ({ country }) => (
 			)}
 		</ul>
 		<img src={country.flag} alt="" width="200" />
+		<Weather city={country.capital} />
 	</>
 )
 
