@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import personService from './services/persons'
 import { Persons, PersonForm } from './components/Person'
+import Notification from './components/Notification'
 
 const Filter = ({ filter, handleFilterChange }) => {
   return (
@@ -21,6 +22,9 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ filter, setFilter ] = useState('')
+  const [ notification, setNotification ] = useState({
+    content: null, type: ''
+  })
 
   useEffect(() => {
     personService
@@ -57,6 +61,13 @@ const App = () => {
               setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
               setNewName('')
               setNewNumber('')
+              setNotification({
+                content:`Updated ${newName}`,
+                type: 'success'
+              })
+              setTimeout(() => {
+                setNotification({content: null, type:''})
+              }, 2000)
             })
       }
     } else {
@@ -66,7 +77,15 @@ const App = () => {
             setPersons(persons.concat(returnedPerson))
             setNewName('')
             setNewNumber('')
+            setNotification({
+              content:`Added ${newName}`,
+              type: 'success'
+            })
+            setTimeout(() => {
+              setNotification({content: null, type:''})
+            }, 2000)
           })
+          .catch((error) => (console.log(error)))
     }
   }
 
@@ -93,6 +112,13 @@ const App = () => {
           setPersons(copy)
           setNewName('')
           setNewNumber('')
+          setNotification({
+            content:`Deleted ${nameToRemove}`,
+            type: 'success'
+          })
+          setTimeout(() => {
+            setNotification({content: null, type:''})
+          }, 2000)
         })
     }
   }
@@ -100,6 +126,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+
+      <Notification message={notification} />
 
       <Filter filter={filter} handleFilterChange={handleFilterChange} />
 
