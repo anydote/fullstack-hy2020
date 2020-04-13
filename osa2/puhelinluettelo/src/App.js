@@ -69,6 +69,17 @@ const App = () => {
                 setNotification({content: null, type:''})
               }, 2000)
             })
+            .catch(error => {
+              let copy = persons.filter((person) => person.id !== id)
+              setPersons(copy)
+              setNotification({
+                content:`Information about ${newName} has already been deleted from the server`,
+                type: 'fail'
+              })
+              setTimeout(() => {
+                setNotification({content: null, type:''})
+              }, 2000)
+            })
       }
     } else {
       personService
@@ -106,20 +117,31 @@ const App = () => {
     const idToRemove = Number(event.target.dataset.id)
     const nameToRemove = event.target.dataset.name
     if (window.confirm(`Delete ${nameToRemove}?`)) {
+      let copy = persons.filter((person) => person.id !== idToRemove)
+      setPersons(copy)
+      setNewName('')
+      setNewNumber('')
+
       personService
-        .remove(idToRemove).then(()  => {
-          let copy = persons.filter((person) => person.id !== idToRemove)
-          setPersons(copy)
-          setNewName('')
-          setNewNumber('')
-          setNotification({
-            content:`Deleted ${nameToRemove}`,
-            type: 'success'
+        .remove(idToRemove)
+          .then(()  => {
+            setNotification({
+              content:`Deleted ${nameToRemove}`,
+              type: 'success'
+            })
+            setTimeout(() => {
+              setNotification({content: null, type:''})
+            }, 2000)
           })
-          setTimeout(() => {
-            setNotification({content: null, type:''})
-          }, 2000)
-        })
+          .catch(error => {
+            setNotification({
+              content:`The person ${nameToRemove} has already been deleted from the server`,
+              type: 'success'
+            })
+            setTimeout(() => {
+              setNotification({content: null, type:''})
+            }, 2000)
+          })
     }
   }
 
