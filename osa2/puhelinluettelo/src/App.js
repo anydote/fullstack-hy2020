@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import personService from './services/persons'
-
-const Person = ({ person }) => <div>{person.name} {person.number}</div>
-
-const Persons = ({ persons }) => persons.map((person) => <Person person={person} />)
+import { Persons, PersonForm } from './components/Person'
 
 const Filter = ({ filter, handleFilterChange }) => {
   return (
@@ -19,28 +16,6 @@ const Filter = ({ filter, handleFilterChange }) => {
   )
 }
 
-const PersonForm = ({ addPerson, newName, handleNameChange, newNumber, handleNumberChange }) => {
-  return (
-    <form onSubmit={addPerson}>
-      <div>
-        name: 
-        <input 
-          value={newName} 
-          onChange={handleNameChange}
-        />
-      </div>
-      <div>
-        number: 
-          <input 
-            value={newNumber} 
-            onChange={handleNumberChange}
-          />
-      </div>
-      <p><button type="submit">add</button></p>
-    </form>
-  )
-}
-
 const App = () => {
   const [ persons, setPersons] = useState([]) 
   const [ newName, setNewName ] = useState('')
@@ -48,11 +23,13 @@ const App = () => {
   const [ filter, setFilter ] = useState('')
 
   useEffect(() => {
-    console.log('effect')
     personService
       .getAll()
         .then(initialPersons =>{
           setPersons(initialPersons)
+        })
+        .catch(error => {
+          console.error(error)
         })
   }, [])
 
@@ -62,8 +39,7 @@ const App = () => {
     event.preventDefault()
     const personObject = {
       name: newName,
-      number: newNumber,
-      id: persons.length + 1,
+      number: newNumber
     }
 
     if (names.includes(newName)) {
@@ -91,9 +67,20 @@ const App = () => {
     setFilter(event.target.value)
   }
 
-  const personsToShow = persons.filter(
-    person => person.name.toLowerCase().includes(filter.toLowerCase())
-  )
+  const handlePersonClick = (event) => {
+    event.preventDefault()
+    const idToRemove = Number(event.target.dataset.id)
+    const nameToRemove = event.target.dataset.name
+    if (window.confirm(`Delete ${nameToRemove}?`)) {
+      personService
+        .remove(idToRemove).then(()  => {
+          let copy = persons.filter((person) => person.id !== idToRemove)
+          setPersons(copy)
+          setNewName('')
+          setNewNumber('')
+        })
+    }
+  }
 
   return (
     <div>
@@ -113,7 +100,11 @@ const App = () => {
 
       <h2>Numbers</h2>
 
-      <Persons persons={personsToShow} />
+      <Persons 
+        persons={persons} 
+        filter={filter} 
+        handlePersonClick={handlePersonClick} 
+      />
     </div>
   )
 }
