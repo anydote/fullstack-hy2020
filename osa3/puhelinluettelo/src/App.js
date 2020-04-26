@@ -52,7 +52,7 @@ const App = () => {
         Do you want to replace the old number with a new one?`
       )) {
         const personToChange = persons.find(p => p.name === newName)
-        const id = Number(personToChange.id)
+        const id = personToChange.id
         const changedPerson = { ...personToChange, number: newNumber }
 
         personService
@@ -114,7 +114,7 @@ const App = () => {
 
   const handlePersonClick = (event) => {
     event.preventDefault()
-    const idToRemove = Number(event.target.dataset.id)
+    const idToRemove = event.target.dataset.id
     const nameToRemove = event.target.dataset.name
     if (window.confirm(`Delete ${nameToRemove}?`)) {
       let copy = persons.filter((person) => person.id !== idToRemove)
