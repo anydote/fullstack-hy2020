@@ -96,7 +96,15 @@ const App = () => {
               setNotification({content: null, type:''})
             }, 2000)
           })
-          .catch((error) => (console.log(error)))
+          .catch(error => {
+            setNotification({
+              content: error.response.data.error,
+              type: 'fail'
+            })
+            setTimeout(() => {
+              setNotification({content: null, type:''})
+            }, 2000)
+          })
     }
   }
 
